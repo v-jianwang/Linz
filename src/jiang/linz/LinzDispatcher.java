@@ -3,10 +3,11 @@ package jiang.linz;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.List;
+
+import jiang.linz.helper.LinzMethodCallHelper;
 
 public class LinzDispatcher {
 
@@ -58,21 +59,7 @@ public class LinzDispatcher {
 			return;
 		
 		Method method = action.getMethod();
-		
-		try {		
-			if (!request.hasParameters()) {
-				method.invoke(handler);
-			}
-			else {
-				method.invoke(handler, request.getParameters());
-			}
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: " + e.getMessage());
-		} catch (IllegalArgumentException e) {
-			System.out.println("IllegalArgumentException: " + e.getMessage());
-		} catch (InvocationTargetException e) {
-			System.out.println("InvocationTargetException: " + e.getMessage());
-		}
+		LinzMethodCallHelper.CallMethod(handler, method, request.getParameters());
 	}
 	
 	private void invokeHandlerStates() {

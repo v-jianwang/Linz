@@ -2,6 +2,7 @@ package jiang.linz;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 public class LinzOutAction {
 
@@ -36,6 +37,20 @@ public class LinzOutAction {
 		outBuilder.append("<li>" + lineEnd);
 		outBuilder.append("  <form method=\"get\" action=\"" + actionMethod.getName() + "\">" + lineEnd);
 		outBuilder.append("    <input type=\"submit\" value=\"    "+ actionMethod.getName() +"    \"/>" + lineEnd);
+		
+		// what if a web action has parameters
+		if (actionMethod.getParameterCount() > 0) {
+			Parameter[] parameters = actionMethod.getParameters();
+			String space = "&nbsp;";
+			for (Parameter p : parameters) {
+				Class<?> t = p.getType();
+				String type = "text";
+				if (t.equals(int.class) || t.equals(Integer.class))
+					type = "number";
+				outBuilder.append(space + p.getName() + "=<input type=\""+ type +"\" name=\""+ p.getName() +"\" />");
+			}
+		}
+		
 		outBuilder.append("  </form>" + lineEnd);
 		outBuilder.append("</li>" + lineEnd);
 		outBuilder.append("<br/>" + lineEnd);

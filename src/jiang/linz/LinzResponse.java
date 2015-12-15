@@ -58,6 +58,7 @@ public class LinzResponse implements Runnable {
 		builder.append("</head>" + lineEnd);
 		builder.append("<body>" + lineEnd);
 		
+		// render output states of client app
 		builder.append("<h1>Linz received command</h1>" + lineEnd);
 		builder.append("<p>The command you sent to Linz is " + request.getAction() + "</p>" + lineEnd);
 		builder.append("<ul>" + lineEnd);
@@ -66,6 +67,7 @@ public class LinzResponse implements Runnable {
 		}
 		builder.append("</ul>" + lineEnd);
 		
+		// render web actions to client app
 		builder.append("<p>You can do the following commands to your application:</p>" + lineEnd);
 		builder.append("<ul>" + lineEnd);
 		for (LinzOutAction action : meta.getAllActions()) {
