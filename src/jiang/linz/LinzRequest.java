@@ -28,16 +28,18 @@ public class LinzRequest {
 	
 	
 	private void parse(InputStream inputStream) {
-		String requestLine;
+		String requestLine = null;
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 			requestLine = reader.readLine();
 		} catch (IOException e) {
 			System.out.println("error when reading input from socket. " + e.getMessage());
-			requestLine = "noset";
 		}
 	
 		System.out.println("http request: " + requestLine);
+		if (requestLine == null) {
+			requestLine = "GET /";
+		}
 		String uri = requestLine.split(" ")[1];
 		
 		Pattern pattern = Pattern.compile("/(?<method>\\w+[^\\?])");
